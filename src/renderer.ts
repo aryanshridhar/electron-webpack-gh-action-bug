@@ -26,22 +26,22 @@
  * ```
  */
 
-import './index.css';
-import * as path from 'path';
-import * as fs from 'fs';
+import './index.css'
+import * as path from 'path'
+import * as fs from 'fs'
 
-declare const STATIC_DIR: string;
+declare const STATIC_DIR: string
 
-const fooJSON = path.join(STATIC_DIR, './foo.json');
+const fooJSON = path.join(STATIC_DIR, './foo.json')
 
-fs.readFile(fooJSON, (err,data) => {
-    if(err){
-        console.log(err);
-        return;
-    }
+fs.readFile(fooJSON, (err, data) => {
+  if (err) {
+    console.log(err)
+    return
+  }
 
-    const fooData = JSON.parse(data.toString())['title'];
-    console.log(fooData);
-});
+  const fooData = JSON.parse(data.toString())['title']
+  console.log(fooData)
+})
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
+console.log('👋 This message is being logged by "renderer.js", included via webpack')

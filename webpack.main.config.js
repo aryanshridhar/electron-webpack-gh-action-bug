@@ -1,4 +1,4 @@
-const plugins = require('./webpack.plugins');
+const plugins = require('./webpack.plugins')
 
 module.exports = {
   /**
@@ -14,4 +14,4 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
-};
+}

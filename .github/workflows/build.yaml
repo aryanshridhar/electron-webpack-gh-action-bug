@@ -1,0 +1,50 @@
+name: Build & Release
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+  pull_request:
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }} - ${{ matrix.arch }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macOS-latest, ubuntu-latest, windows-latest ]
+        arch: [ x64, arm64 ]
+        include:
+        - os: windows-latest
+          arch: ia32
+        - os: ubuntu-latest
+          arch: armv7l
+        exclude:
+        - os: windows-latest
+          arch: arm64
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16.x
+          cache: yarn
+      - name: Install
+        run: yarn --network-timeout 100000 || yarn --network-timeout 100000 || yarn --network-timeout 100000
+      - name: Make
+        run: yarn make --arch=${{ matrix.arch }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            out/**/*.deb
+            out/**/*.dmg
+            out/**/*setup*.exe
+            out/**/*.nupkg
+            out/**/*.rpm
+            out/**/*.zip
+            out/**/RELEASES
